@@ -21,9 +21,8 @@ const port = process.env.PORT || 5000;
 
 app.use(cors({
     origin: [
-        'http://localhost:6173',
+        'http://localhost:6173', 'https://ibn-aroub-portfolio.surge.sh'
     ],
-    credentials: true
 }));
 
 app.use(express.json())
@@ -92,6 +91,11 @@ async function run() {
         const projectCollection = IA_database.collection('projects');
         const emailCollection = IA_database.collection('emails');
 
+        /**
+         * ====================================
+         * Users APIs
+         * ====================================
+         */
         /* Auth api */
         app.post('/api/v1/auth/jwt', setTokenCookie, async (req, res) => {
             try {
@@ -145,7 +149,7 @@ async function run() {
             // console.log(userMessage);
 
             /* Save to database */
-            const result = await emailCollection.insertOne(userMessage);
+            await emailCollection.insertOne(userMessage);
 
             // console.log(result);
 
